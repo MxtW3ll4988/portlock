@@ -1,4 +1,6 @@
-Nombre: Gretel Denisse Manzo Medina 
+ # PCproject
 
-Matricula: 2149592
+## Datos personales
 
+- **Nombre:** Angel Emmanuel Garcia Ibarra
+- **Matricula:** 2117906
