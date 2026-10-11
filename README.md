@@ -8,3 +8,5 @@
 - **Matrucula:** 2149592
 - **Nombre:** Angel Eduardo Guevara Cruz
 - **Matricula:** 2167129
+- **Nombre:** Kimberly Brisseyda Mata Ojeda
+- **Matricula:** 2203372
