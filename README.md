@@ -10,4 +10,6 @@
 - **Matricula:** 2167129
 - **Nombre:** Kimberly Brisseyda Mata Ojeda
 - **Matricula:** 2203372
+- **Nombre:** Andrea Reyes Silva
+- **Matricula:** 2189711
 
