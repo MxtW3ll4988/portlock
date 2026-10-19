@@ -26,12 +26,13 @@
 - **Matricula:** 2205477
 - **Carrera:** LSTI
 - **Semestre:** 3
-# Nombre de la librería: Snitch
-Snitch es una herramienta modular desarrollada en Python diseñada para el reconocimiento, análisis de tráfico y auditoría de redes. Está orientada a la ciberseguridad y administradores de sistemas que necesitan realizar tareas de descubrimiento y análisis directamente desde la línea de comandos
+# Nombre de la librería: PortLock
+PortLock es una herramienta modular en Python para el reconocimiento, escaneo de puertos y auditoría de redes. Está orientada a la ciberseguridad para descubrir y analizar la conectividad de red mediante sockets desde la línea de comandos.
+
 # **Modulos planeados**
 - **scanner.py:** 
 - **port_scanner.py:** 
 - **sniffer.py:** 
 - **pcap_analyzer.py:** Gretel Denisse Manzo Medina
-- **interoperabilidad.py:** 
+- **interoperabilidad.py:** Kimberly Brisseyda Mata Ojeda
 - **main.py:** 
