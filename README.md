@@ -27,7 +27,7 @@
 - **Carrera:** LSTI
 - **Semestre:** 3
 # Nombre de la librería: PortLock
-PortLock es una herramienta modular en Python para el reconocimiento, escaneo de puertos y auditoría de redes. Está orientada a la ciberseguridad para descubrir y analizar la conectividad de red mediante sockets desde la línea de comandos.
+PortLock es una herramienta modular en python para el reconocimiento, escaneo de puertos y auditoría de redes esta está orientada a la ciberseguridad para descubrir y analizar la conectividad de red mediante sockets desde la línea de comandos.
 
 # **Modulos planeados**
 - **scanner.py:** 
