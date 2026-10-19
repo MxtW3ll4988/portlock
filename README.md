@@ -28,7 +28,7 @@
 - **Semestre:** 3
 # Nombre de la librería: Snitch
 Snitch es una herramienta modular desarrollada en Python diseñada para el reconocimiento, análisis de tráfico y auditoría de redes. Está orientada a la ciberseguridad y administradores de sistemas que necesitan realizar tareas de descubrimiento y análisis directamente desde la línea de comandos
-**Modulos planeados**
+# **Modulos planeados**
 scanner.py: Oswaldo Nabat Aranda Correa
 port_scanner.py: Angel Eduardo Guevara Cruz
 sniffer.py: Angel Emmanuel Garcia Ibarra
