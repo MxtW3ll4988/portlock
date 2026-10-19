@@ -26,4 +26,4 @@
 - **Matricula:** 2205477
 - **Carrera:** LSTI
 - **Semestre:** 3
-# Snitch
+# Nombre de la librería: Snitch
