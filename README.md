@@ -34,4 +34,4 @@ Snitch es una herramienta modular desarrollada en Python diseñada para el recon
 - **sniffer.py:** 
 - **pcap_analyzer.py:** Gretel Denisse Manzo Medina
 - **interoperabilidad.py:** 
-- **main.py:** Andrea Reyes Silva
+- **main.py:** 
