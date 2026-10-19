@@ -32,7 +32,7 @@ PortLock es una herramienta modular en python para el reconocimiento, escaneo de
 # **Modulos planeados**
 - **scanner.py:** 
 - **port_scanner.py:** 
-- **sniffer.py:** 
+- **sniffer.py:** Angel Emmanuel García Ibarra
 - **pcap_analyzer.py:** Gretel Denisse Manzo Medina
 - **interoperabilidad.py:** Kimberly Brisseyda Mata Ojeda
 - **main.py:** 
