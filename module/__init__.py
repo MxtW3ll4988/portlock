@@ -3,3 +3,5 @@ from .pcap_analyzer import (
     generar_resumen_trafico,
     leer_archivo_pcap,
 )
+from . import network_utils
+
