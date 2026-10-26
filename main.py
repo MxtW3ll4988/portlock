@@ -2,6 +2,7 @@
 
 import sys
 
+# Importación de módulos del paquete PortLock
 try:
     from module.network_utils import preparar_objetivo
     from module.port_scanner import validate_target, scan_port, scan_ports
@@ -13,6 +14,7 @@ try:
         generar_resumen_trafico,
     )
 except ImportError:
+    # Ruta alternativa por si se ejecuta desde la raíz del proyecto
     from portlock.module.network_utils import preparar_objetivo
     from portlock.module.port_scanner import validate_target, scan_port, scan_ports
     from module.scanner import escanear_puerto, escanear_rango
