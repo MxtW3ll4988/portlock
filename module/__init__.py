@@ -13,7 +13,14 @@ from .sniffer import (
     resumir_captura,
 )
 
+from .port_scanner import main, scan_port, scan_ports, validate_target
+
+
 __all__ = [
+    "main",
+    "scan_port",
+    "scan_ports",
+    "validate_target",
     "network_utils",
     "filtrar_por_protocolo",
     "generar_resumen_trafico",
