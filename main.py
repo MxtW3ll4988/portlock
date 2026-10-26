@@ -1,6 +1,7 @@
 """Punto de entrada principal (CLI) para la herramienta de ciberseguridad PortLock."""
 
 import sys
+
 try:
     from module.network_utils import preparar_objetivo
     from module.port_scanner import validate_target, scan_port, scan_ports
@@ -22,6 +23,7 @@ except ImportError:
         generar_resumen_trafico,
     )
 
+
 def mostrar_menu() -> None:
     """Muestra el menú principal de opciones de PortLock."""
     print("\n" + "=" * 50)
@@ -35,6 +37,7 @@ def mostrar_menu() -> None:
     print("6. Filtrar paquetes PCAP por protocolo")
     print("7. Salir")
     print("-" * 50)
+
 
 def main() -> None:
     """Función principal que controla la ejecución de la interfaz de comandos."""
