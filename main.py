@@ -1,6 +1,8 @@
 """Punto de entrada principal (CLI) para la herramienta de ciberseguridad PortLock."""
 
 import sys
+import argparse
+from module.reportes import guardar_reporte
 
 # Importación de módulos del paquete PortLock
 try:
@@ -25,6 +27,29 @@ except ImportError:
         generar_resumen_trafico,
     )
 
+def generar_reporte_portlock(parametros, resultados, errores=None):
+    """Solicita el formato y guarda el reporte de PortLock."""
+
+    datos = {
+        "parametros": parametros,
+        "resultados": resultados,
+        "errores": errores or []
+    }
+
+    formato = input("Formato del reporte (json/csv): ").strip().lower()
+
+    if formato not in ("json", "csv"):
+        print("[!] Formato no válido.")
+        return
+
+    ruta = input(
+        f"Nombre del archivo de salida (ej. reporte.{formato}): "
+    ).strip()
+
+    try:
+        guardar_reporte(datos, ruta, formato)
+    except (ValueError, OSError) as error:
+        print(f"[!] Error al generar el reporte: {error}")
 
 def mostrar_menu() -> None:
     """Muestra el menú principal de opciones de PortLock."""
@@ -55,8 +80,26 @@ def main() -> None:
                 if ip_obj:
                     port = int(input("Ingresa el puerto a escanear: "))
                     print(f"[*] Escaneando {ip_obj}:{port} con Sockets...")
+
                     abierto = scan_port(str(ip_obj), port)
-                    print(f"[+] El puerto {port} está: {'ABIERTO' if abierto else 'CERRADO'}")
+
+                    estado = "ABIERTO" if abierto else "CERRADO"
+
+                    print(f"[+] El puerto {port} está: {estado}")
+
+                    generar_reporte_portlock(
+                    parametros={
+                     "objetivo": str(ip_obj),
+                     "puerto": port
+                     },
+                    resultados=[
+                    {
+                       "puerto": port,
+                      "estado": estado
+                       }
+                     ],
+                     errores=[]
+                    )
                 else:
                     print("[!] El objetivo no es una dirección IPv4 válida.")
             except ValueError as e:
@@ -71,7 +114,26 @@ def main() -> None:
                     inicio = int(input("Puerto inicial (por defecto 1): ") or 1)
                     fin = int(input("Puerto final (por defecto 1024): ") or 1024)
                     print(f"[*] Escaneando rango {inicio}-{fin} en {ip_obj}...")
-                    scan_ports(str(ip_obj), inicio, fin)
+
+                    abiertos = scan_ports(str(ip_obj), inicio, fin)
+
+                    print(f"[+] Puertos abiertos encontrados: {abiertos}")      
+
+                    generar_reporte_portlock(
+                    parametros={
+                            "objetivo": str(ip_obj),
+                            "puerto_inicial": inicio,
+                            "puerto_final": fin
+                            },
+                    resultados=[
+                    {
+                        "puerto": puerto,
+                        "estado": "ABIERTO"
+                    }
+                   for puerto in abiertos
+            ],
+            errores=[]
+            )
                 else:
                     print("[!] El objetivo no es una dirección IPv4 válida.")
             except ValueError as e:
@@ -86,8 +148,27 @@ def main() -> None:
                     inicio = int(input("Puerto inicial (ej. 1): "))
                     fin = int(input("Puerto final (ej. 1024): "))
                     print(f"[*] Ejecutando escaneo SYN (Scapy) en {ip_obj}...")
+
                     abiertos = escanear_rango(str(ip_obj), inicio, fin)
+
                     print(f"[+] Puertos abiertos encontrados: {abiertos}")
+
+                    generar_reporte_portlock(
+                    parametros={
+                    "objetivo": str(ip_obj),
+                    "tipo_escaneo": "SYN con Scapy",
+                    "puerto_inicial": inicio,
+                    "puerto_final": fin
+                    },
+                    resultados=[
+                    {
+                    "puerto": puerto,
+                    "estado": "ABIERTO"
+                    }
+                    for puerto in abiertos
+                    ],
+                        errores=[]
+                        )
                 else:
                     print("[!] El objetivo no es una dirección IPv4 válida.")
             except ValueError as e:
@@ -106,8 +187,20 @@ def main() -> None:
                 
                 if paquetes:
                     resumen = resumir_captura(paquetes)
+
                     print(f"\n[+] Captura finalizada. Total de paquetes: {resumen['total']}")
                     print(f"[+] Desglose por protocolos: {resumen['protocolos']}")
+
+                    generar_reporte_portlock(
+                    parametros={
+                        "tipo": "Captura de tráfico de red",
+                        "cantidad_maxima": cantidad,
+                        "tiempo_limite": tiempo,
+                        "filtro": filtro
+                    },
+                       resultados=[resumen],
+                        errores=[]
+                    )
                 else:
                     print("[-] No se capturaron paquetes.")
             except (ValueError, RuntimeError) as e:
@@ -116,17 +209,64 @@ def main() -> None:
         elif opcion == "5":
             ruta = input("Ingresa la ruta del archivo .pcap a analizar: ").strip()
             paquetes = leer_archivo_pcap(ruta)
+
             if paquetes:
                 generar_resumen_trafico(paquetes)
 
+                resultados = []
+
+                for i, paquete in enumerate(paquetes[:5]):
+                    resultado = {
+                        "paquete": i + 1,
+                        "resumen": paquete.summary()
+                    }
+                    resultados.append(resultado)
+
+                generar_reporte_portlock(
+                    parametros={
+                        "tipo": "Análisis de archivo PCAP",
+                        "archivo": ruta,
+                        "total_paquetes": len(paquetes)
+                    },
+                    resultados=resultados,
+            errores=[]
+                )
+        
         elif opcion == "6":
             ruta = input("Ingresa la ruta del archivo .pcap: ").strip()
             paquetes = leer_archivo_pcap(ruta)
+
             if paquetes:
-                protocolo = input("Ingresa el protocolo a filtrar (ej. TCP, UDP, IP): ").strip().upper()
+                protocolo = input(
+                    "Ingresa el protocolo a filtrar (ej. TCP, UDP, IP): "
+                ).strip().upper()
+
                 filtrados = filtrar_por_protocolo(paquetes, protocolo)
+
                 if filtrados:
                     generar_resumen_trafico(filtrados)
+
+                    resultados = []
+
+                    for i, paquete in enumerate(filtrados[:5]):
+                        resultados.append({
+                            "paquete": i + 1,
+                            "protocolo": protocolo,
+                            "resumen": paquete.summary()
+                        })
+
+                    generar_reporte_portlock(
+                        parametros={
+                            "tipo": "Filtrado de paquetes PCAP",
+                            "archivo": ruta,
+                            "protocolo": protocolo,
+                            "total_paquetes_filtrados": len(filtrados)
+                                },
+                                resultados=resultados,
+                        errores=[]
+                    )
+                else:
+                    print("[-] No se encontraron paquetes para ese protocolo.")
 
         elif opcion == "7":
             print("\nSaliendo de PortLock. ¡Hasta luego!")
