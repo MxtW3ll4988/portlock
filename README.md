@@ -69,4 +69,18 @@ Utilidades de análisis forense y lectura de archivos de captura de tráfico par
 | `leer_archivo_pcap(ruta_archivo)` | Lee un archivo pcap y devuelve la lista de paquetes capturados | Lista de paquetes de Scapy o lista vacía | `FileNotFoundError`, `Scapy_Exception` |
 | `filtrar_por_protocolo(paquetes, protocolo)` | Filtra los paquetes capturados según una capa o protocolo específico | Subconjunto de paquetes filtrados | `Exception` |
 | `generar_resumen_trafico(paquetes)` | Imprime un resumen básico de las direcciones IP origen y destino | Ninguno (imprime en consola) | `Exception` |
-  
+
+  CLI
+scanner.py
+
+Escaneo de puertos TCP con Scapy (escaneo SYN). Envía un paquete SYN a cada puerto y considera abierto el que responde con SYN-ACK. Requiere privilegios de administrador (sudo) para enviar paquetes.
+
+Función	Qué hace	Devuelve	Errores
+validar_puerto(puerto)	Indica si el puerto es un entero entre 1 y 65535	True o False	Ninguno
+escanear_puerto(ip, puerto)	Envía un SYN a un puerto y revisa la respuesta	True si está abierto, False si no	Ninguno (captura PermissionError y avisa que se requiere sudo)
+escanear_rango(ip, inicio, fin)	Escanea un rango de puertos (fin incluido)	Lista de puertos abiertos	Ninguno
+
+Ejemplos:
+
+escanear_puerto("127.0.0.1", 0) devuelve False sin enviar ningún paquete (puerto fuera de 1-65535)
+escanear_rango("192.168.1.1", 20, 25) devuelve una lista como [22] con los puertos abiertos
