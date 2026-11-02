@@ -58,4 +58,15 @@ Ejemplos de error:
 - `validar_ip("999.1.1.1")` lanza `ValueError: IP/CIDR inválido: '999.1.1.1'`
 - `validar_puerto("0")` lanza `ValueError: Puerto fuera de rango: 0 (debe ser 1-65535).`
 - `validar_rango_puertos("80-20")` lanza `ValueError: Rango inválido: 80 es mayor que 20.`
+
+# **CLI**
+## **pcap_analyzer.py**
+
+Utilidades de análisis forense y lectura de archivos de captura de tráfico para PortLock.
+
+| Función | Qué hace | Devuelve | Errores |
+| --- | --- | --- | --- |
+| `leer_archivo_pcap(ruta_archivo)` | Lee un archivo pcap y devuelve la lista de paquetes capturados | Lista de paquetes de Scapy o lista vacía | `FileNotFoundError`, `Scapy_Exception` |
+| `filtrar_por_protocolo(paquetes, protocolo)` | Filtra los paquetes capturados según una capa o protocolo específico | Subconjunto de paquetes filtrados | `Exception` |
+| `generar_resumen_trafico(paquetes)` | Imprime un resumen básico de las direcciones IP origen y destino | Ninguno (imprime en consola) | `Exception` |
   
