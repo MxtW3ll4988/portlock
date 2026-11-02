@@ -1,4 +1,3 @@
-nner · PY
 """Módulo scanner: escaneo básico de puertos TCP con Scapy."""
  
 from scapy.all import IP, TCP, sr1
