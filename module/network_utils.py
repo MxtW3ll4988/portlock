@@ -62,24 +62,23 @@ def preparar_objetivo(entrada):
     if es_ip_valida(entrada):
         return entrada
     return resolver_dominio(entrada)
-    def validar_ip(ip_str):
+def validar_ip(ip_str):
     """Valida que una cadena sea una IP o un rango CIDR válido.
- 
+
     Argumentos:
         ip_str (str): IP o rango en formato CIDR, por ejemplo "192.168.1.0/24".
- 
+
     Devoluciones:
         bool: True si es válido.
- 
+
     Aumentos:
         ValueError: Si el formato es incorrecto.
     """
     try:
         ipaddress.ip_network(ip_str.strip(), strict=False)
+        return True
     except ValueError as e:
         raise ValueError(f"IP/CIDR inválido: '{ip_str}'") from e
-    return True
- 
  
 def validar_puerto(puerto):
     """Valida que un puerto sea un entero entre 1 y 65535.
