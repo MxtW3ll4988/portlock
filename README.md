@@ -77,9 +77,9 @@ Escaneo de puertos TCP con Scapy (escaneo SYN). Envía un paquete SYN a cada pue
 
 |Función |	Qué hace |	Devuelve |	Errores |
 | --- | --- | --- | --- |
-| `validar_puerto(puerto)` |	Indica si el puerto es un entero entre 1 y 65535	True o False	Ninguno
-| `escanear_puerto(ip, puerto)` |	Envía un SYN a un puerto y revisa la respuesta	True si está abierto, False si no	Ninguno (captura PermissionError y avisa que se requiere sudo)
-| `escanear_rango(ip, inicio, fin)` |	Escanea un rango de puertos (fin incluido)	Lista de puertos abiertos	Ninguno
+| `validar_puerto(puerto)` |	Indica si el puerto es un entero entre 1 y 65535	| True o False |	Ninguno |
+| `escanear_puerto(ip, puerto)` |	Envía un SYN a un puerto y revisa la respuesta	| True si está abierto, False si no |	Ninguno (captura PermissionError y avisa que se requiere sudo) |
+| `escanear_rango(ip, inicio, fin)` |	Escanea un rango de puertos (fin incluido) |	Lista de puertos abiertos |	Ninguno |
 
 Ejemplos:
 
