@@ -10,3 +10,9 @@ __pycache__/
 
 .vscode/
 .idea/
+*.pcap
+*_cli.json
+*_cli.csv
+*_final.json
+*_final.csv
+filtro_*.json
