@@ -5,7 +5,7 @@ import json
 import csv
 from datetime import datetime
 
-from module.network_utils import validar_archivo_salida
+from .network_utils import validar_archivo_salida
 
 
 def guardar_reporte(datos, ruta_salida, formato="json"):
