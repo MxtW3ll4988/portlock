@@ -95,3 +95,4 @@ Funciones auxiliares compartidas entre los módulos de PortLock.
 | `timestamp_actual()` | Devuelve la fecha y hora actual en formato ISO 8601 |
 | `medir_tiempo(func)` | Decorador que imprime cuánto tarda en ejecutarse una función |
 | `imprimir_banner(nombre, version)` | Imprime el banner de la librería al iniciar |
+<img width="998" height="111" alt="image" src="https://github.com/user-attachments/assets/185ad2a1-b50b-46c2-b9f8-4b9b4122dc31" />
