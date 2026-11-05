@@ -138,7 +138,7 @@ python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
 python main_argparse.py scan-range --target 127.0.0.1 --start-port 1 --end-port 100 --format csv --output rango.csv
 ```
 
-# **Prueba**
+# **Prueba de humo**
 
 Comando para verificar que la librería se importa correctamente:
 
@@ -148,3 +148,13 @@ python -c "import module; print(module.__version__)"
 
 Resultado:
 <img width="998" height="111" alt="image" src="https://github.com/user-attachments/assets/185ad2a1-b50b-46c2-b9f8-4b9b4122dc31" />
+
+Generar un reporte con datos reales desde el CLI:
+
+```bash
+python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
+```
+
+Resultado:
+<img width="1749" height="277" alt="image" src="https://github.com/user-attachments/assets/d3ea1c7c-0c39-4f8c-ac04-7df8323701e7" />
+
