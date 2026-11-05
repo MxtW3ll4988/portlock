@@ -85,3 +85,13 @@ Ejemplos:
 
 `escanear_puerto("127.0.0.1", 0)` devuelve `False` sin enviar ningún paquete (puerto fuera de 1-65535)
 `escanear_rango("192.168.1.1", 20, 25)` devuelve una lista como `[22]` con los puertos abiertos
+
+## **utils.py**
+
+Funciones auxiliares compartidas entre los módulos de PortLock.
+
+| Función | Qué hace |
+| --- | --- |
+| `timestamp_actual()` | Devuelve la fecha y hora actual en formato ISO 8601 |
+| `medir_tiempo(func)` | Decorador que imprime cuánto tarda en ejecutarse una función |
+| `imprimir_banner(nombre, version)` | Imprime el banner de la librería al iniciar |
