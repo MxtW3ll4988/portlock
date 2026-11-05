@@ -3,7 +3,6 @@
 
 import json
 import csv
-import os
 from datetime import datetime
 
 from module.network_utils import validar_archivo_salida
