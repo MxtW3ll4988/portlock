@@ -59,7 +59,6 @@ Ejemplos de error:
 - `validar_puerto("0")` lanza `ValueError: Puerto fuera de rango: 0 (debe ser 1-65535).`
 - `validar_rango_puertos("80-20")` lanza `ValueError: Rango inválido: 80 es mayor que 20.`
 
-# **CLI**
 ## **pcap_analyzer.py**
 
 Utilidades de análisis forense y lectura de archivos de captura de tráfico para PortLock.
@@ -70,7 +69,6 @@ Utilidades de análisis forense y lectura de archivos de captura de tráfico par
 | `filtrar_por_protocolo(paquetes, protocolo)` | Filtra los paquetes capturados según una capa o protocolo específico | Subconjunto de paquetes filtrados | `Exception` |
 | `generar_resumen_trafico(paquetes)` | Imprime un resumen básico de las direcciones IP origen y destino | Ninguno (imprime en consola) | `Exception` |
 
-# **CLI**
 ## **scanner.py**
 
 Escaneo de puertos TCP con Scapy (escaneo SYN). Envía un paquete SYN a cada puerto y considera abierto el que responde con SYN-ACK. Requiere privilegios de administrador (sudo) para enviar paquetes.
@@ -95,4 +93,58 @@ Funciones auxiliares compartidas entre los módulos de PortLock.
 | `timestamp_actual()` | Devuelve la fecha y hora actual en formato ISO 8601 |
 | `medir_tiempo(func)` | Decorador que imprime cuánto tarda en ejecutarse una función |
 | `imprimir_banner(nombre, version)` | Imprime el banner de la librería al iniciar |
+
+## *Requisitos e instalación**
+
+- Python 3
+- Dependencias: se instalan desde `requirements.txt` (incluye Scapy para el sniffer y el análisis de PCAP)
+
+```bash
+git clone <URL del repositorio>
+cd portlock
+pip install -r requirements.txt
+```
+
+Notas:
+
+- Los subcomandos `syn` y `sniffer` requieren privilegios de administrador.
+- En Windows, la captura de tráfico en vivo necesita Npcap. Si no está instalado, aparece el aviso `No libpcap provider available`, que no afecta al resto de las funciones.
+
+# **Uso desde la línea de comandos**
+
+Ver todos los comandos disponibles:
+
+```bash
+python main_argparse.py --help
+```
+
+| Subcomando | Qué hace |
+| --- | --- |
+| `scan` | Comprueba un puerto TCP |
+| `scan-range` | Comprueba un rango de puertos TCP |
+| `syn` | Ejecuta un escaneo SYN con Scapy |
+| `sniffer` | Captura tráfico de red |
+| `pcap` | Analiza un archivo PCAP |
+| `pcap-filter` | Filtra un PCAP por protocolo |
+
+Opciones de `scan`: `--target`, `--port`, `--format {json,csv}` y `--output`.
+
+Opciones de `scan-range`: `--target`, `--start-port`, `--end-port`, `--format {json,csv}` y `--output`.
+
+Ejemplos:
+
+```bash
+python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
+python main_argparse.py scan-range --target 127.0.0.1 --start-port 1 --end-port 100 --format csv --output rango.csv
+```
+
+# **Prueba de humo**
+
+Comando para verificar que la librería se importa correctamente:
+
+```bash
+python -c "import module; print(module.__version__)"
+```
+
+Resultado:
 <img width="998" height="111" alt="image" src="https://github.com/user-attachments/assets/185ad2a1-b50b-46c2-b9f8-4b9b4122dc31" />
