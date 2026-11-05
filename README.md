@@ -94,7 +94,7 @@ Funciones auxiliares compartidas entre los módulos de PortLock.
 | `medir_tiempo(func)` | Decorador que imprime cuánto tarda en ejecutarse una función |
 | `imprimir_banner(nombre, version)` | Imprime el banner de la librería al iniciar |
 
-## *Requisitos e instalación**
+## **Requisitos e instalación**
 
 - Python 3
 - Dependencias: se instalan desde `requirements.txt` (incluye Scapy para el sniffer y el análisis de PCAP)
@@ -138,7 +138,7 @@ python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
 python main_argparse.py scan-range --target 127.0.0.1 --start-port 1 --end-port 100 --format csv --output rango.csv
 ```
 
-# **Prueba de humo**
+# **Prueba**
 
 Comando para verificar que la librería se importa correctamente:
 
