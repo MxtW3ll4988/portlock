@@ -17,7 +17,7 @@ from module.pcap_analyzer import (
     filtrar_por_protocolo,
     generar_resumen_trafico,
 )
-from module.reportes import guardar_reporte
+from module.informes import guardar_reporte
 
 
 def guardar_resultado(args, parametros, resultados, errores=None):
@@ -216,7 +216,7 @@ def agregar_opciones_reporte(parser, comando):
     parser.add_argument(
         "--format",
         dest="formato",
-        choices=("json", "csv"),
+        choices=("json", "csv", "txt"),
         default="json",
         help="Formato del reporte (predeterminado: json).",
     )
@@ -288,7 +288,7 @@ def crear_parser():
 def main():
     parser = crear_parser()
     args = parser.parse_args()
-    return args.func(args)
+    return
 
 
 if __name__ == "__main__":
