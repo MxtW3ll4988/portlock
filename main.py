@@ -4,23 +4,24 @@ import argparse
 import json
 import sys
 
-from módulo.network_utils import (
+from module.network_utils import (
     preparar_objetivo,
     validar_puerto,
     validar_rango_puertos,
 )
-from módulo.port_scanner import validate_target, scan_port, scan_ports
-from módulo.scanner import escanear_rango
-from módulo.sniffer import capturar_trafico, resumir_captura
-from módulo.pcap_analyzer import (
+from module.port_scanner import validate_target, scan_port, scan_ports
+from module.scanner import escanear_rango
+from module.sniffer import capturar_trafico, resumir_captura
+from module.pcap_analyzer import (
     leer_archivo_pcap,
     filtrar_por_protocolo,
     generar_resumen_trafico,
 )
-from módulo.reportes import guardar_reporte
+from module.reportes import guardar_reporte
 
 
 def guardar_resultado(args, parametros, resultados, errores=None):
+    """Guarda el resultado en el formato y la ruta indicados por CLI."""
     ruta = args.output or f"reporte_{args.comando}.{args.formato}"
     datos = {
         "parametros": parametros,
@@ -37,6 +38,7 @@ def guardar_resultado(args, parametros, resultados, errores=None):
 
 
 def validar_objetivo(entrada):
+    """Resuelve el objetivo y comprueba que sea una dirección IPv4."""
     objetivo = preparar_objetivo(entrada)
     ip_objetivo = validate_target(objetivo)
     if ip_objetivo is None:
