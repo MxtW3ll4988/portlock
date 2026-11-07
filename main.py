@@ -1,23 +1,23 @@
 """Punto de entrada CLI para la herramienta PortLock."""
 
 import argparse
-import json
 import sys
 
-from module.network_utils import (
+from module import (
     preparar_objetivo,
     validar_puerto,
     validar_rango_puertos,
-)
-from module.port_scanner import validate_target, scan_port, scan_ports
-from module.scanner import escanear_rango
-from module.sniffer import capturar_trafico, resumir_captura
-from module.pcap_analyzer import (
+    validate_target,
+    scan_port,
+    scan_ports,
+    escanear_rango,
+    capturar_trafico,
+    resumir_captura,
     leer_archivo_pcap,
     filtrar_por_protocolo,
     generar_resumen_trafico,
+    guardar_reporte,
 )
-from module.informes import guardar_reporte
 
 
 def guardar_resultado(args, parametros, resultados, errores=None):
@@ -288,7 +288,7 @@ def crear_parser():
 def main():
     parser = crear_parser()
     args = parser.parse_args()
-    return
+    return args.func(args)
 
 
 if __name__ == "__main__":
