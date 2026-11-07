@@ -1,8 +1,7 @@
-"""network_utils.py — Utilidades de validación y resolución de red
+"""network_utils.py — Utilidades de validación y resolución de red.
 
 Forma parte de PortLock
 Autor: Kimberly Brisseyda Mata Ojeda.
-
 """
 
 import ipaddress
@@ -11,7 +10,7 @@ import os
 
 
 def es_ip_valida(texto):
-    """Indica si un texto es una IPv4 válida
+    """Indica si un texto es una IPv4 válida.
 
     Args:
         texto (str): Cadena a evaluar.
@@ -114,7 +113,7 @@ def validar_rango_puertos(rango):
     Devoluciones:
         tuple: (puerto_inicio, puerto_fin) como enteros.
 
-     Aumentos:
+    Aumentos:
         ValueError: Si el formato es incorrecto o el inicio es mayor que
             el fin.
     """
