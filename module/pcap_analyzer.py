@@ -66,4 +66,3 @@ def generar_resumen_trafico(paquetes):
                 print(f"Paquete {i + 1}: {pkt['IP'].src} -> {pkt['IP'].dst}")
     except Exception as e:
         print(f"[-] Error al generar el resumen de tráfico: {e}")
-        
