@@ -1,19 +1,64 @@
-import os
-from interoperabilidad import detectar_os, ejecutar_comando, enumerar_sistema
+"""Pruebas de interoperabilidad.py."""
 
-def test_detectar_os():
+import json
+
+import pytest
+
+from module.interoperabilidad import (
+    SECTIONS,
+    detect_os,
+    enumerar_sistema,
+    get_command,
+    parse_output,
+)
+
+
+def test_detect_os():
     """Verifica que detecte un sistema operativo válido."""
-    so = detectar_os()
-    assert so in ["Windows", "Linux/macOS", "Desconocido"]
+    assert detect_os() in ("Windows", "Linux", "Darwin")
 
-def test_ejecutar_comando():
-    """Verifica que la ejecución de un comando básico devuelva texto."""
-    salida = ejecutar_comando("echo hola")
-    assert "hola" in salida
+
+def test_get_command_por_sistema():
+    """Verifica que cada sistema use su propio shell."""
+    assert get_command("Windows")[0] == "powershell"
+    assert get_command("Linux")[0] == "bash"
+    assert get_command("Darwin")[0] == "bash"
+
+
+def test_get_command_sistema_no_compatible():
+    """Verifica que un sistema desconocido lance RuntimeError."""
+    with pytest.raises(RuntimeError):
+        get_command("Plan9")
+
+
+def test_parse_output_estructura():
+    """Verifica que la salida de un script se separe por secciones."""
+    salida = (
+        "### hostname\nmi-pc\n"
+        "### current_user\nkim\n"
+        "### listening_ports\n0.0.0.0:80 pid=4\n"
+    )
+    datos = parse_output(salida)
+    assert datos["hostname"] == "mi-pc"
+    assert datos["current_user"] == "kim"
+    assert datos["listening_ports"] == ["0.0.0.0:80 pid=4"]
+    assert set(datos) == set(SECTIONS)
+
 
 def test_enumerar_sistema_estructura():
-    """Verifica que la función devuelva un diccionario con las llaves clave."""
+    """Verifica que devuelva un diccionario con las llaves esperadas."""
     resultado = enumerar_sistema()
     assert isinstance(resultado, dict)
-    assert "os_detectado" in resultado
-    assert "hostname" in resultado
+    for llave in ("timestamp", "os", "return_code", "success", "errors",
+                  "data"):
+        assert llave in resultado
+    assert set(resultado["data"]) == set(SECTIONS)
+
+
+def test_enumerar_sistema_guarda_json(tmp_path):
+    """Verifica que el reporte se guarde como JSON válido."""
+    ruta = tmp_path / "enum.json"
+    enumerar_sistema(str(ruta))
+    contenido = json.loads(ruta.read_text(encoding="utf-8"))
+    assert "os" in contenido
+    assert "data" in contenido
