@@ -1,5 +1,6 @@
 """Menú interactivo CLI para la herramienta PortLock."""
 
+
 import sys
 
 from module import (
