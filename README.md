@@ -158,3 +158,4 @@ python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
 Resultado:
 <img width="1749" height="277" alt="image" src="https://github.com/user-attachments/assets/d3ea1c7c-0c39-4f8c-ac04-7df8323701e7" />
 
+
