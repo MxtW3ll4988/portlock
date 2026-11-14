@@ -36,6 +36,8 @@ PortLock es una herramienta modular en python para el reconocimiento, escaneo de
 - **pcap_analyzer.py:** Gretel Denisse Manzo Medina
 - **interoperabilidad.py:** Equipo
 - **network_utils.py:** Kimberly Brisseyda Mata Ojeda
+- **utils.py:** Kimbelry Brisseyda Mata Ojeda
+- **reporte.py** Equipo
 - **main.py:** Andrea Reyes Silva
 
 # **CLI**
@@ -94,6 +96,57 @@ Funciones auxiliares compartidas entre los módulos de PortLock.
 | `medir_tiempo(func)` | Decorador que imprime cuánto tarda en ejecutarse una función |
 | `imprimir_banner(nombre, version)` | Imprime el banner de la librería al iniciar |
 
+## **reportes.py** 
+Generación de reportes de PortLock en JSON y CSV.
+
+| Función | Qué hace | Devuelve | Errores |
+| --- | --- | --- | --- |
+| `guardar_reporte(datos, ruta_salida, formato="json")` | Guarda los resultados en un archivo `json` o `csv` | `True` | `ValueError`, `FileNotFoundError`, `PermissionError`, `OSError` |
+
+`datos` es un diccionario con las llaves `parametros` (diccionario), `resultados` (lista de diccionarios) y `errores` (lista). El reporte incluye la fecha y hora de generación y el total de resultados, y valida la ruta de salida con `validar_archivo_salida`.
+
+## **interoperabilidad.py**
+Enumeración defensiva del sistema. Detecta el sistema operativo, ejecuta el script nativo correspondiente (PowerShell en Windows, Bash en Linux/macOS), captura la salida como datos estructurados y genera un reporte. Los scripts van integrados en el módulo como cadenas de texto y ambos producen las mismas secciones, por lo que los resultados son equivalentes en cualquier sistema.
+
+Información que recopila:
+
+| Sección | PowerShell (Windows) | Bash (Linux/macOS) |
+| --- | --- | --- |
+| `hostname` | `$env:COMPUTERNAME` | `hostname` |
+| `current_user` | `$env:USERNAME` | `whoami` |
+| `network_interfaces` | `Get-NetIPAddress` | `ip addr` / `ifconfig` |
+| `listening_ports` | `Get-NetTCPConnection -State Listen` | `ss -tlnp` / `netstat -tlnp` |
+| `active_processes` | `Get-Process` | `ps aux` |
+| `active_services` | `Get-Service` (en ejecución) | `systemctl list-units` |
+| `system_users` | `Get-LocalUser` | `cat /etc/passwd` |
+
+| Función | Qué hace | Devuelve |
+| --- | --- | --- |
+| `detect_os()` | Detecta el sistema operativo | `Windows`, `Linux` o `Darwin` |
+| `get_command(os_name)` | Arma el comando del script según el sistema | Lista con el comando (`RuntimeError` si el sistema no es compatible) |
+| `run_script(os_name)` | Ejecuta el script nativo | Tupla `(salida, errores, código)` |
+| `parse_output(raw_output)` | Convierte la salida en datos estructurados | Diccionario por sección |
+| `generate_report(result)` | Genera un reporte de texto legible | Texto |
+| `save_report(result, output_path)` | Guarda el resultado: JSON si la ruta termina en `.json`, texto en otro caso | Ruta del archivo |
+| `enumeracion_sistema(output_path=None)` | Ejecuta todo el proceso y, si se indica una ruta, guarda el reporte | Diccionario con `timestamp`, `os`, `return_code`, `success`, `errors` y `data` |
+| `enumerar_sistema(output_path=None)` | Alias de `enumeracion_sistema` | Igual que la anterior |
+
+Ejemplo de uso:
+
+```python
+from module.interoperabilidad import enumerar_sistema
+
+resultado = enumerar_sistema("enum.json")
+print(resultado["os"], resultado["data"]["hostname"])
+```
+
+También se puede ejecutar directo para ver el reporte en pantalla:
+
+```bash
+python -m module.interoperabilidad
+```
+
+
 ## **Requisitos e instalación**
 
 - Python 3
@@ -138,6 +191,37 @@ python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
 python main_argparse.py scan-range --target 127.0.0.1 --start-port 1 --end-port 100 --format csv --output rango.csv
 ```
 
+| Opción | Qué hace |
+| --- | --- |
+| `1` | Escaneo de un puerto TCP (sockets) |
+| `2` | Escaneo de un rango de puertos (sockets) |
+| `3` | Escaneo SYN con Scapy |
+| `4` | Captura de tráfico de red (sniffer) |
+| `5` | Análisis de un archivo PCAP |
+| `6` | Filtrado de un PCAP por protocolo |
+| `7` | Salir |
+
+En cada opción, el programa pregunta si se quiere guardar el reporte y en qué formato (`json` o `csv`). Antes de ejecutar una operación se validan el objetivo, los puertos y la ruta de salida (ver la sección de `network_utils.py`), y si algo es incorrecto se muestra un mensaje de error claro.
+
+# **Pruebas automatizadas**
+
+Las pruebas se escriben con `pytest`. Archivos de prueba actuales:
+
+- `module/test_network_utils.py` (9 pruebas)
+- `module/test_utils.py` (4 pruebas)
+- `module/test_interoperabilidad.py` (6 pruebas)
+
+Para ejecutarlas desde la carpeta raíz del proyecto:
+
+```bash
+python -m pytest -v
+```
+
+Resultado: las 19 pruebas pasan.
+
+<img width="1604" height="678" alt="image" src="https://github.com/user-attachments/assets/eb7be641-548f-49a2-b832-2035a8e70a93" />
+
+
 # **Prueba de humo**
 
 Comando para verificar que la librería se importa correctamente:
@@ -158,4 +242,12 @@ python main_argparse.py scan --target 127.0.0.1 --port 80 --output prueba.json
 Resultado:
 <img width="1749" height="277" alt="image" src="https://github.com/user-attachments/assets/d3ea1c7c-0c39-4f8c-ac04-7df8323701e7" />
 
+# **Evidencia de ejecución**
+
+Salida real de `enumerar_sistema()` ejecutada en Windows, en el equipo de Kimberly Brisseyda Mata Ojeda (se muestra el inicio del reporte):
+
+```bash
+python -m module.interoperabilidad
+```
+<img width="855" height="399" alt="image" src="https://github.com/user-attachments/assets/5e4a6cd6-d6e6-4e20-beba-9bf78eab605d" />
 
