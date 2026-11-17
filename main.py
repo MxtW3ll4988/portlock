@@ -1,6 +1,5 @@
 """Menú interactivo CLI para la herramienta PortLock."""
 
-
 import sys
 import argparse
 from pathlib import Path
@@ -32,7 +31,6 @@ NEGRITA = "\033[1m"
 
 
 def guardar_resultado(comando_nombre, parametros, resultados, errores=None, formato="json", output=None):
-    """Guarda el resultado en el formato y la ruta indicados."""
     ruta = output or f"reporte_{comando_nombre}.{formato}"
     datos = {
         "parametros": parametros,
@@ -48,7 +46,6 @@ def guardar_resultado(comando_nombre, parametros, resultados, errores=None, form
 
 
 def validar_objetivo(entrada):
-    """Resuelve el objetivo y comprueba que sea una dirección IPv4."""
     objetivo = preparar_objetivo(entrada)
     ip_objetivo = validate_target(objetivo)
     if ip_objetivo is None:
@@ -201,7 +198,7 @@ def menu_pcap_filter():
 def main():
     while True:
         print(f"\n{AZUL}{NEGRITA}============================================={RESET}")
-        print(f"{AZUL}{NEGRITA}           PORTLOCK - MENÚ PRINCIPAL         {RESET}")
+        print(f"{AZUL}{NEGRITA}            PORTLOCK - MENÚ PRINCIPAL         {RESET}")
         print(f"{AZUL}{NEGRITA}============================================={RESET}")
         print(f" {AZUL}{NEGRITA}1.{RESET} Escaneo de un Puerto TCP (Sockets)")
         print(f" {AZUL}{NEGRITA}2.{RESET} Escaneo de Rango de Puertos (Sockets)")
@@ -234,113 +231,6 @@ def main():
         
         input(f"\n{AMARILLO}Presiona Enter para continuar...{RESET}")
 
-
-def ejecutar_cli():
-    parser = argparse.ArgumentParser(
-        description="PortLock - Herramienta de seguridad informática"
-    )
-
-    subparsers = parser.add_subparsers(dest="comando")
-
-    # Comando de interoperabilidad
-    parser_enum = subparsers.add_parser(
-        "enumerar",
-        help="Realiza una enumeración defensiva del sistema"
-    )
-
-    parser_enum.add_argument(
-        "--output",
-        default="enum.json",
-        help="Ruta donde se guardará el reporte"
-    )
-
-    args = parser.parse_args()
-
-    if args.comando == "enumerar":
-        ruta = Path(args.output)
-        ruta.parent.mkdir(parents=True, exist_ok=True)
-
-        resultado = enumerar_sistema(str(ruta))
-
-        if resultado["success"]:
-            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
-            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
-        else:
-            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
-            print(resultado["errors"])
-            sys.exit(1)
-
-
-def ejecutar_cli():
-    parser = argparse.ArgumentParser(
-        description="PortLock - Herramienta de seguridad informática"
-    )
-
-    subparsers = parser.add_subparsers(dest="comando")
-
-    # Comando de interoperabilidad
-    parser_enum = subparsers.add_parser(
-        "enumerar",
-        help="Realiza una enumeración defensiva del sistema"
-    )
-
-    parser_enum.add_argument(
-        "--output",
-        default="enum.json",
-        help="Ruta donde se guardará el reporte"
-    )
-
-    args = parser.parse_args()
-
-    if args.comando == "enumerar":
-        ruta = Path(args.output)
-        ruta.parent.mkdir(parents=True, exist_ok=True)
-
-        resultado = enumerar_sistema(str(ruta))
-
-        if resultado["success"]:
-            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
-            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
-        else:
-            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
-            print(resultado["errors"])
-            sys.exit(1)
-
-
-def ejecutar_cli():
-    parser = argparse.ArgumentParser(
-        description="PortLock - Herramienta de seguridad informática"
-    )
-
-    subparsers = parser.add_subparsers(dest="comando")
-
-    # Comando de interoperabilidad
-    parser_enum = subparsers.add_parser(
-        "enumerar",
-        help="Realiza una enumeración defensiva del sistema"
-    )
-
-    parser_enum.add_argument(
-        "--output",
-        default="enum.json",
-        help="Ruta donde se guardará el reporte"
-    )
-
-    args = parser.parse_args()
-
-    if args.comando == "enumerar":
-        ruta = Path(args.output)
-        ruta.parent.mkdir(parents=True, exist_ok=True)
-
-        resultado = enumerar_sistema(str(ruta))
-
-        if resultado["success"]:
-            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
-            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
-        else:
-            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
-            print(resultado["errors"])
-            sys.exit(1)
 
 def ejecutar_cli():
     parser = argparse.ArgumentParser(
