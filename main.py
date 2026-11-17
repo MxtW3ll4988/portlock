@@ -2,6 +2,7 @@
 
 import sys
 import argparse
+import json
 from pathlib import Path
 from module.interoperabilidad import enumerar_sistema
 
@@ -21,7 +22,6 @@ from module import (
     guardar_reporte,
 )
 
-# Colores ANSI
 VERDE = "\033[92m"
 AMARILLO = "\033[93m"
 ROJO = "\033[91m"
@@ -43,7 +43,6 @@ def guardar_resultado(comando_nombre, parametros, resultados, errores=None, form
         print(f"{VERDE}[✔]{RESET} Reporte guardado en: {NEGRITA}{ruta}{RESET}")
     except (ValueError, OSError) as error:
         print(f"{ROJO}[✖] No se pudo generar el reporte: {error}{RESET}", file=sys.stderr)
-
 
 def validar_objetivo(entrada):
     objetivo = preparar_objetivo(entrada)
@@ -195,6 +194,24 @@ def menu_pcap_filter():
         guardar_resultado("pcap_filter", {"archivo": ruta_pcap, "protocolo": protocolo}, resultados, formato=fmt)
 
 
+def menu_enumerar():
+    print(f"\n{NEGRITA}=== 7. Enumeración Defensiva (Interoperabilidad) ==={RESET}")
+    ruta_salida = input("Ruta del archivo de salida [default: enum.json]: ").strip() or "enum.json"
+    
+    ruta = Path(ruta_salida)
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+
+    print(f"[*] Detectando sistema operativo y ejecutando script nativo...")
+    resultado = enumerar_sistema(str(ruta))
+
+    if resultado["success"]:
+        print(f"\n{VERDE}[✔] Enumeración completada exitosamente.{RESET}")
+        print(f"{VERDE}[✔] Reporte guardado en: {NEGRITA}{ruta}{RESET}\n")
+    else:
+        print(f"\n{ROJO}[!] La enumeración presentó errores:{RESET}")
+        print(resultado["errors"])
+
+
 def main():
     while True:
         print(f"\n{AZUL}{NEGRITA}============================================={RESET}")
@@ -206,10 +223,11 @@ def main():
         print(f" {AZUL}{NEGRITA}4.{RESET} Sniffer de Tráfico de Red")
         print(f" {AZUL}{NEGRITA}5.{RESET} Analizar Archivo PCAP")
         print(f" {AZUL}{NEGRITA}6.{RESET} Filtrar PCAP por Protocolo")
-        print(f" {AZUL}{NEGRITA}7.{RESET} Salir del Menú")
+        print(f" {AZUL}{NEGRITA}7.{RESET} Interoperabilidad")
+        print(f" {AZUL}{NEGRITA}8.{RESET} Salir del Menú")
         print(f"{AZUL}---------------------------------------------{RESET}")
         
-        opcion = input(f"{NEGRITA}Elige una opción (1-7): {RESET}").strip()
+        opcion = input(f"{NEGRITA}Elige una opción (1-8): {RESET}").strip()
 
         if opcion == "1":
             menu_scan()
@@ -224,10 +242,12 @@ def main():
         elif opcion == "6":
             menu_pcap_filter()
         elif opcion == "7":
+            menu_enumerar()
+        elif opcion == "8":
             print(f"\n{VERDE}[✔] Saliendo de PortLock. ¡Hasta luego!{RESET}\n")
             break
         else:
-            print(f"\n{ROJO}[!] Opción no válida. Por favor, elige un número del 1 al 7.{RESET}")
+            print(f"\n{ROJO}[!] Opción no válida. Por favor, elige un número del 1 al 8.{RESET}")
         
         input(f"\n{AMARILLO}Presiona Enter para continuar...{RESET}")
 
@@ -236,15 +256,11 @@ def ejecutar_cli():
     parser = argparse.ArgumentParser(
         description="PortLock - Herramienta de seguridad informática"
     )
-
     subparsers = parser.add_subparsers(dest="comando")
-
-    # Comando de interoperabilidad
     parser_enum = subparsers.add_parser(
         "enumerar",
         help="Realiza una enumeración defensiva del sistema"
     )
-
     parser_enum.add_argument(
         "--output",
         default="enum.json",
@@ -256,9 +272,7 @@ def ejecutar_cli():
     if args.comando == "enumerar":
         ruta = Path(args.output)
         ruta.parent.mkdir(parents=True, exist_ok=True)
-
         resultado = enumerar_sistema(str(ruta))
-
         if resultado["success"]:
             print(f"{VERDE}[✔] Enumeración completada.{RESET}")
             print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
