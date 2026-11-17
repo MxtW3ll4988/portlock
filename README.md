@@ -165,6 +165,35 @@ Notas:
 
 # **Uso desde la línea de comandos**
 
+PortLock permite realizar una enumeración defensiva del sistema desde la terminal mediante el archivo `main.py`.
+
+### Enumeración del sistema
+
+Para ejecutar la enumeración y guardar los resultados en un archivo JSON:
+
+```bash
+python main.py enumerar --output evidencias/enum.json
+```
+
+El programa detecta el sistema operativo y recopila información del equipo, incluyendo:
+
+- Nombre del equipo (hostname).
+- Usuario actual.
+- Interfaces de red.
+- Puertos en escucha.
+- Procesos activos.
+- Servicios activos.
+- Usuarios del sistema.
+
+El resultado se guarda en la ruta especificada mediante `--output`. Si no se indica una ruta, se utiliza `enum.json`.
+
+### Ejecución del menú interactivo
+
+Para iniciar el menú principal de PortLock:
+
+```bash
+python main.py
+```
 Ver todos los comandos disponibles:
 
 ```bash
@@ -203,24 +232,33 @@ python main_argparse.py scan-range --target 127.0.0.1 --start-port 1 --end-port 
 
 En cada opción, el programa pregunta si se quiere guardar el reporte y en qué formato (`json` o `csv`). Antes de ejecutar una operación se validan el objetivo, los puertos y la ruta de salida (ver la sección de `network_utils.py`), y si algo es incorrecto se muestra un mensaje de error claro.
 
-# **Pruebas automatizadas**
+# Pruebas automatizadas
 
-Las pruebas se escriben con `pytest`. Archivos de prueba actuales:
+PortLock utiliza `pytest` para verificar el funcionamiento de sus módulos mediante pruebas automatizadas.
 
-- `module/test_network_utils.py` (9 pruebas)
-- `module/test_utils.py` (4 pruebas)
-- `module/test_interoperabilidad.py` (6 pruebas)
+Los archivos de prueba incluyen:
 
-Para ejecutarlas desde la carpeta raíz del proyecto:
+- `module/test_network_utils.py`
+- `module/test_utils.py`
+- `module/test_interoperabilidad.py`
+- `module/test_reportes.py`
+- `module/test_port_scanner.py`
+- `module/test_scanner.py`
+- `module/test_sniffer.py`
+- `module/test_pcap_analyzer.py`
+
+Para ejecutar todas las pruebas desde la carpeta raíz del proyecto:
 
 ```bash
 python -m pytest -v
 ```
 
-Resultado: las 19 pruebas pasan.
+**Resultado:** 42 pruebas aprobadas.
 
-<img width="1604" height="678" alt="image" src="https://github.com/user-attachments/assets/eb7be641-548f-49a2-b832-2035a8e70a93" />
+python -m module.interoperabilidad
+python main.py enumerar --output evidencias/enum.json
 
+Las pruebas verifican funciones de validación, interoperabilidad entre sistemas operativos, generación de reportes, escaneo de puertos, captura de tráfico y análisis de archivos PCAP.
 
 # **Prueba de humo**
 

@@ -139,6 +139,8 @@ def run_script(os_name):
  
     stdout = completed.stdout.decode("utf-8", errors="replace")
     stderr = completed.stderr.decode("utf-8", errors="replace")
+    if os_name == "Windows":
+        stderr = ""
     return stdout, stderr.strip(), completed.returncode
  
  

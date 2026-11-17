@@ -2,6 +2,9 @@
 
 
 import sys
+import argparse
+from pathlib import Path
+from module.interoperabilidad import enumerar_sistema
 
 from module import (
     preparar_objetivo,
@@ -232,9 +235,156 @@ def main():
         input(f"\n{AMARILLO}Presiona Enter para continuar...{RESET}")
 
 
+def ejecutar_cli():
+    parser = argparse.ArgumentParser(
+        description="PortLock - Herramienta de seguridad informática"
+    )
+
+    subparsers = parser.add_subparsers(dest="comando")
+
+    # Comando de interoperabilidad
+    parser_enum = subparsers.add_parser(
+        "enumerar",
+        help="Realiza una enumeración defensiva del sistema"
+    )
+
+    parser_enum.add_argument(
+        "--output",
+        default="enum.json",
+        help="Ruta donde se guardará el reporte"
+    )
+
+    args = parser.parse_args()
+
+    if args.comando == "enumerar":
+        ruta = Path(args.output)
+        ruta.parent.mkdir(parents=True, exist_ok=True)
+
+        resultado = enumerar_sistema(str(ruta))
+
+        if resultado["success"]:
+            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
+            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
+        else:
+            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
+            print(resultado["errors"])
+            sys.exit(1)
+
+
+def ejecutar_cli():
+    parser = argparse.ArgumentParser(
+        description="PortLock - Herramienta de seguridad informática"
+    )
+
+    subparsers = parser.add_subparsers(dest="comando")
+
+    # Comando de interoperabilidad
+    parser_enum = subparsers.add_parser(
+        "enumerar",
+        help="Realiza una enumeración defensiva del sistema"
+    )
+
+    parser_enum.add_argument(
+        "--output",
+        default="enum.json",
+        help="Ruta donde se guardará el reporte"
+    )
+
+    args = parser.parse_args()
+
+    if args.comando == "enumerar":
+        ruta = Path(args.output)
+        ruta.parent.mkdir(parents=True, exist_ok=True)
+
+        resultado = enumerar_sistema(str(ruta))
+
+        if resultado["success"]:
+            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
+            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
+        else:
+            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
+            print(resultado["errors"])
+            sys.exit(1)
+
+
+def ejecutar_cli():
+    parser = argparse.ArgumentParser(
+        description="PortLock - Herramienta de seguridad informática"
+    )
+
+    subparsers = parser.add_subparsers(dest="comando")
+
+    # Comando de interoperabilidad
+    parser_enum = subparsers.add_parser(
+        "enumerar",
+        help="Realiza una enumeración defensiva del sistema"
+    )
+
+    parser_enum.add_argument(
+        "--output",
+        default="enum.json",
+        help="Ruta donde se guardará el reporte"
+    )
+
+    args = parser.parse_args()
+
+    if args.comando == "enumerar":
+        ruta = Path(args.output)
+        ruta.parent.mkdir(parents=True, exist_ok=True)
+
+        resultado = enumerar_sistema(str(ruta))
+
+        if resultado["success"]:
+            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
+            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
+        else:
+            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
+            print(resultado["errors"])
+            sys.exit(1)
+
+def ejecutar_cli():
+    parser = argparse.ArgumentParser(
+        description="PortLock - Herramienta de seguridad informática"
+    )
+
+    subparsers = parser.add_subparsers(dest="comando")
+
+    # Comando de interoperabilidad
+    parser_enum = subparsers.add_parser(
+        "enumerar",
+        help="Realiza una enumeración defensiva del sistema"
+    )
+
+    parser_enum.add_argument(
+        "--output",
+        default="enum.json",
+        help="Ruta donde se guardará el reporte"
+    )
+
+    args = parser.parse_args()
+
+    if args.comando == "enumerar":
+        ruta = Path(args.output)
+        ruta.parent.mkdir(parents=True, exist_ok=True)
+
+        resultado = enumerar_sistema(str(ruta))
+
+        if resultado["success"]:
+            print(f"{VERDE}[✔] Enumeración completada.{RESET}")
+            print(f"{VERDE}[✔] Reporte guardado en: {ruta}{RESET}")
+        else:
+            print(f"{ROJO}[!] La enumeración presentó errores.{RESET}")
+            print(resultado["errors"])
+            sys.exit(1)
+
+
 if __name__ == "__main__":
     try:
-        main()
+        if len(sys.argv) > 1:
+            ejecutar_cli()
+        else:
+            main()
+
     except KeyboardInterrupt:
         print(f"\n\n{ROJO}[!] Programa interrumpido por el usuario.{RESET}")
         sys.exit(0)
