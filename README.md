@@ -297,4 +297,3 @@ PortLock se desarrolló con fines **educativos** como proyecto integrador de la 
 
 Todo el código aquí publicado sigue el principio visto en clase: **la misma herramienta que sirve para auditar puede usarse mal — el contexto, la autorización y la intención son lo que determina su uso correcto.** Escanea puertos, captura tráfico y enumera sistemas **únicamente en equipos y redes propios o con autorización expresa** (por ejemplo `127.0.0.1` o un laboratorio designado), nunca en hosts ajenos. El equipo no se hace responsable del uso indebido de esta herramienta. Úsala de forma responsable.
 
-PortLock depende de [Scapy](https://scapy.net/), un proyecto independiente con su propia licencia.
