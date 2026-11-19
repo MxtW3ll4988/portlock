@@ -289,3 +289,12 @@ python -m module.interoperabilidad
 ```
 <img width="855" height="399" alt="image" src="https://github.com/user-attachments/assets/5e4a6cd6-d6e6-4e20-beba-9bf78eab605d" />
 
+---
+
+##  Uso y licencia
+
+PortLock se desarrolló con fines **educativos** como proyecto integrador de la materia. Puedes consultarlo, usarlo y modificarlo como referencia para aprender, siempre que conserves el aviso de copyright. Se distribuye bajo la **licencia MIT**; consulta el archivo `LICENSE` para más detalles.
+
+Todo el código aquí publicado sigue el principio visto en clase: **la misma herramienta que sirve para auditar puede usarse mal — el contexto, la autorización y la intención son lo que determina su uso correcto.** Escanea puertos, captura tráfico y enumera sistemas **únicamente en equipos y redes propios o con autorización expresa** (por ejemplo `127.0.0.1` o un laboratorio designado), nunca en hosts ajenos. El equipo no se hace responsable del uso indebido de esta herramienta. Úsala de forma responsable.
+
+PortLock depende de [Scapy](https://scapy.net/), un proyecto independiente con su propia licencia.
