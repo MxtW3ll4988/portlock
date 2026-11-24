@@ -2,7 +2,6 @@
 
 import sys
 import argparse
-import json
 from pathlib import Path
 from module.interoperabilidad import enumerar_sistema
 
@@ -201,7 +200,7 @@ def menu_enumerar():
     ruta = Path(ruta_salida)
     ruta.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"[*] Detectando sistema operativo y ejecutando script nativo...")
+    print("[*] Detectando sistema operativo y ejecutando script nativo...")
     resultado = enumerar_sistema(str(ruta))
 
     if resultado["success"]:
