@@ -1,4 +1,4 @@
-"""network_utils.py — Utilidades de validación y resolución de red.
+"""network_utils.py — Utilidades de validación y resolución de red
 
 Forma parte de PortLock
 Autor: Kimberly Brisseyda Mata Ojeda.
