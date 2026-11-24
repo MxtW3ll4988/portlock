@@ -26,6 +26,7 @@
 - **Matricula:** 2205477
 - **Carrera:** LSTI
 - **Semestre:** 3
+  
 # Nombre de la librería: PortLock
 PortLock es una herramienta modular en python para el reconocimiento, escaneo de puertos y auditoría de redes esta está orientada a la ciberseguridad para descubrir y analizar la conectividad de red mediante sockets desde la línea de comandos.
 
@@ -294,9 +295,23 @@ python -m module.interoperabilidad
 
 ---
 
-##  Uso y licencia
+## Autores
 
-PortLock se desarrolló con fines **educativos** como proyecto integrador de la materia. Puedes consultarlo, usarlo y modificarlo como referencia para aprender, siempre que conserves el aviso de copyright. Se distribuye bajo la **licencia MIT**; consulta el archivo `LICENSE` para más detalles.
+| Nombre | Usuario de GitHub |
+| --- | --- |
+| Angel Emmanuel García Ibarra | @Emmanuel-28-ai |
+| Gretel Denisse Manzo Medina | @GretelDeni |
+| Angel Eduardo Guevara Cruz | @MxtW3ll4988 |
+| Kimberly Brisseyda Mata Ojeda | @KimMata32 |
+| Andrea Reyes Silva | @AndreaRys |
+| Oswaldo Nabat Aranda Correa | @Neri6n |
+
+
+##  Uso
+
+PortLock se desarrolló con fines **educativos** como proyecto integrador de la materia. Puedes consultarlo, usarlo y modificarlo como referencia para aprender, siempre que conserves el aviso de copyright. 
 
 Todo el código aquí publicado sigue el principio visto en clase: **la misma herramienta que sirve para auditar puede usarse mal — el contexto, la autorización y la intención son lo que determina su uso correcto.** Escanea puertos, captura tráfico y enumera sistemas **únicamente en equipos y redes propios o con autorización expresa** (por ejemplo `127.0.0.1` o un laboratorio designado), nunca en hosts ajenos. El equipo no se hace responsable del uso indebido de esta herramienta. Úsala de forma responsable.
 
+## Licencia
+Este proyecto se distribuye bajo la licencia MIT.

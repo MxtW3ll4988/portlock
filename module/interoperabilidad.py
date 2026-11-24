@@ -231,6 +231,5 @@ def enumeracion_sistema(output_path=None):
 # Alias por compatibilidad con el nombre usado en la evidencia de prueba
 enumerar_sistema = enumeracion_sistema
 
-
 if __name__ == "__main__":
     print(generate_report(enumeracion_sistema()))
