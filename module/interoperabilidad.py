@@ -95,12 +95,10 @@ echo '### system_users'
 cat /etc/passwd 2>/dev/null
 """
  
- 
 def detect_os():
     """Devuelve el nombre del sistema operativo (Windows, Linux, Darwin)."""
     return platform.system()
- 
- 
+
 def get_command(os_name):
     """Devuelve el comando a ejecutar según el sistema operativo."""
     if os_name == "Windows":
@@ -120,8 +118,7 @@ def get_command(os_name):
     if os_name in ("Linux", "Darwin"):
         return ["bash", "-c", BASH_SCRIPT]
     raise RuntimeError("Unsupported operating system: " + os_name)
- 
- 
+
 def run_script(os_name):
     """Ejecuta el script nativo y devuelve (salida, errores, código)."""
     command = get_command(os_name)
@@ -143,7 +140,6 @@ def run_script(os_name):
         stderr = ""
     return stdout, stderr.strip(), completed.returncode
  
- 
 def parse_output(raw_output):
     """Convierte la salida del script en un diccionario estructurado."""
     data = {name: [] for name in SECTIONS}
@@ -162,7 +158,6 @@ def parse_output(raw_output):
         data[name] = data[name][0] if data[name] else ""
  
     return data
- 
  
 def generate_report(result):
     """Genera un reporte de texto legible a partir del resultado."""
@@ -192,7 +187,6 @@ def generate_report(result):
  
     return "\n".join(lines)
  
- 
 def save_report(result, output_path):
     """Guarda el resultado: JSON si la extensión es .json, texto si no."""
     path = Path(output_path)
@@ -202,7 +196,6 @@ def save_report(result, output_path):
         content = generate_report(result)
     path.write_text(content, encoding="utf-8")
     return path
- 
  
 def enumeracion_sistema(output_path=None):
     """Enumeración defensiva del sistema.
@@ -227,10 +220,8 @@ def enumeracion_sistema(output_path=None):
  
     return result
  
- 
 # Alias por compatibilidad con el nombre usado en la evidencia de prueba
 enumerar_sistema = enumeracion_sistema
- 
- 
+
 if __name__ == "__main__":
     print(generate_report(enumeracion_sistema()))
