@@ -2,7 +2,6 @@
 
 import sys
 import argparse
-import json
 from pathlib import Path
 from module.interoperabilidad import enumerar_sistema
 
@@ -44,6 +43,7 @@ def guardar_resultado(comando_nombre, parametros, resultados, errores=None, form
     except (ValueError, OSError) as error:
         print(f"{ROJO}[✖] No se pudo generar el reporte: {error}{RESET}", file=sys.stderr)
 
+
 def validar_objetivo(entrada):
     objetivo = preparar_objetivo(entrada)
     ip_objetivo = validate_target(objetivo)
@@ -69,7 +69,7 @@ def menu_scan():
     color_estado = VERDE if abierto else ROJO
 
     print(f"\n{NEGRITA}[✦] Resultado:{RESET} {objetivo}:{puerto} -> {color_estado}{NEGRITA}{estado}{RESET}\n")
-    
+
     guardar_opcion = input("¿Deseas guardar el reporte? (s/n): ").strip().lower()
     if guardar_opcion == 's':
         fmt = input("Formato [json/csv/txt] (default json): ").strip() or "json"
@@ -92,7 +92,7 @@ def menu_scan_range():
     abiertos = scan_ports(objetivo, val_inicio, val_fin)
 
     print(f"\n{NEGRITA}[✦] Puertos abiertos encontrados:{RESET} {VERDE}{abiertos}{RESET}\n")
-    
+
     if input("¿Deseas guardar el reporte? (s/n): ").strip().lower() == 's':
         fmt = input("Formato [json/csv/txt] (default json): ").strip() or "json"
         guardar_resultado("scan_range", {"objetivo": objetivo, "inicio": val_inicio, "fin": val_fin}, [{"puerto": p, "estado": "ABIERTO"} for p in abiertos], formato=fmt)
@@ -114,7 +114,7 @@ def menu_syn():
     abiertos = escanear_rango(objetivo, val_inicio, val_fin)
 
     print(f"\n{NEGRITA}[✦] Puertos abiertos por SYN:{RESET} {VERDE}{abiertos}{RESET}\n")
-    
+
     if input("¿Deseas guardar el reporte? (s/n): ").strip().lower() == 's':
         fmt = input("Formato [json/csv/txt] (default json): ").strip() or "json"
         guardar_resultado("syn", {"objetivo": objetivo, "inicio": val_inicio, "fin": val_fin}, [{"puerto": p, "estado": "ABIERTO"} for p in abiertos], formato=fmt)
@@ -156,7 +156,7 @@ def menu_sniffer():
 def menu_pcap():
     print(f"\n{NEGRITA}=== 5. Analizar Archivo PCAP ==={RESET}")
     ruta_pcap = input("Introduce la ruta del archivo .pcap: ").strip()
-    
+
     print(f"[*] Leyendo archivo {ruta_pcap}...")
     paquetes = leer_archivo_pcap(ruta_pcap)
     if not paquetes:
@@ -165,7 +165,7 @@ def menu_pcap():
 
     print(f"\n{NEGRITA}[✦] Archivo leído correctamente.{RESET} Total paquetes: {AZUL}{len(paquetes)}{RESET}\n")
     generar_resumen_trafico(paquetes)
-    
+
     resultados = [{"paquete": i + 1, "resumen": p.summary()} for i, p in enumerate(paquetes[:5])]
     if input("¿Deseas guardar el reporte? (s/n): ").strip().lower() == 's':
         fmt = input("Formato [json/csv/txt] (default json): ").strip() or "json"
@@ -197,11 +197,11 @@ def menu_pcap_filter():
 def menu_enumerar():
     print(f"\n{NEGRITA}=== 7. Enumeración Defensiva (Interoperabilidad) ==={RESET}")
     ruta_salida = input("Ruta del archivo de salida [default: enum.json]: ").strip() or "enum.json"
-    
+
     ruta = Path(ruta_salida)
     ruta.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"[*] Detectando sistema operativo y ejecutando script nativo...")
+    print("[*] Detectando sistema operativo y ejecutando script nativo...")
     resultado = enumerar_sistema(str(ruta))
 
     if resultado["success"]:
@@ -226,7 +226,7 @@ def main():
         print(f" {AZUL}{NEGRITA}7.{RESET} Interoperabilidad")
         print(f" {AZUL}{NEGRITA}8.{RESET} Salir del Menú")
         print(f"{AZUL}---------------------------------------------{RESET}")
-        
+
         opcion = input(f"{NEGRITA}Elige una opción (1-8): {RESET}").strip()
 
         if opcion == "1":
@@ -248,7 +248,7 @@ def main():
             break
         else:
             print(f"\n{ROJO}[!] Opción no válida. Por favor, elige un número del 1 al 8.{RESET}")
-        
+
         input(f"\n{AMARILLO}Presiona Enter para continuar...{RESET}")
 
 
