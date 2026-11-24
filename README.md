@@ -29,16 +29,19 @@
 # Nombre de la librería: PortLock
 PortLock es una herramienta modular en python para el reconocimiento, escaneo de puertos y auditoría de redes esta está orientada a la ciberseguridad para descubrir y analizar la conectividad de red mediante sockets desde la línea de comandos.
 
-# **Modulos planeados**
-- **scanner.py:** Oswaldo Nabat Aranda Correa 
-- **port_scanner.py:** Angel Eduardo Guevara Cruz
-- **sniffer.py:** Angel Emmanuel García Ibarra
-- **pcap_analyzer.py:** Gretel Denisse Manzo Medina
-- **interoperabilidad.py:** Equipo
-- **network_utils.py:** Kimberly Brisseyda Mata Ojeda
-- **utils.py:** Kimbelry Brisseyda Mata Ojeda
-- **reporte.py** Equipo
-- **main.py:** Andrea Reyes Silva
+# **Módulos**
+
+| Módulo | Descripción | Responsable |
+| --- | --- | --- |
+| `scanner.py` | Escaneo SYN con Scapy | Oswaldo Nabat Aranda Correa |
+| `port_scanner.py` | Escaneo TCP con sockets | Angel Eduardo Guevara Cruz |
+| `sniffer.py` | Captura de tráfico de red | Angel Emmanuel García Ibarra |
+| `pcap_analyzer.py` | Análisis y filtrado de archivos PCAP | Gretel Denisse Manzo Medina |
+| `interoperabilidad.py` | Enumeración del sistema con PowerShell o Bash | Equipo |
+| `network_utils.py` | Validación y resolución de red | Kimberly Brisseyda Mata Ojeda |
+| `utils.py` | Funciones auxiliares compartidas | Kimberly Brisseyda Mata Ojeda |
+| `reportes.py` | Reportes en JSON y CSV | Equipo |
+| `main.py` | Menú de línea de comandos | Andrea Reyes Silva |
 
 # **CLI**
 ## network_utils.py
